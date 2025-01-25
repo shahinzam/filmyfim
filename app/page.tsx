@@ -16,20 +16,22 @@ export default function Home() {
   const [featuredMovies, setFeaturedMovies] = useState<Movie[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [isFeaturedLoading, setIsFeaturedLoading] = useState(true);
-  const [error, setError] = useState('');
+  const [fetchError, setFetchError] = useState<string>('');
   const [selectedMovie, setSelectedMovie] = useState<string | null>(null);
 
   const fetchFeaturedMovies = async () => {
     setIsFeaturedLoading(true);
+    setFetchError('');
     try {
       const response = await fetch('https://filmyfim-production.up.railway.app/featured-movies');
       if (!response.ok) {
-        throw new Error('Failed to fetch featured movies');
+        throw new Error(`HTTP error! status: ${response.status}`);
       }
       const data = await response.json();
       setFeaturedMovies(data.movies);
     } catch (err) {
       console.error('Error fetching featured movies:', err);
+      setFetchError(err instanceof Error ? err.message : 'خطا در دریافت اطلاعات');
     } finally {
       setIsFeaturedLoading(false);
     }
@@ -161,9 +163,9 @@ export default function Home() {
           </div>
         )}
         
-        {error && (
+        {fetchError && (
           <p className="text-red-400 text-center mt-2 text-sm persian-text">
-            خطا در دریافت اطلاعات. لطفاً دوباره تلاش کنید.
+            {fetchError}
           </p>
         )}
         
