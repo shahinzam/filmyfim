@@ -1,3 +1,8 @@
+/* Import fonts first */
+@import url('https://fonts.googleapis.com/css2?family=Vazirmatn:wght@100;200;300;400;500;600;700;800;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+
+/* Then Tailwind directives */
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -17,5 +22,89 @@
 body {
   color: var(--foreground);
   background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: 'Poppins', sans-serif;
 }
+
+/* Persian text styles */
+.font-vazir {
+  font-family: 'Vazirmatn', sans-serif;
+  font-feature-settings: "ss01";
+}
+
+/* Custom typography classes */
+.persian-text {
+  font-family: 'Vazirmatn', sans-serif;
+  line-height: 1.8;
+  font-feature-settings: "ss01", "ss02", "ss03";
+  font-weight: 400;
+  letter-spacing: -0.2px;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.persian-text-bold {
+  font-family: 'Vazirmatn', sans-serif;
+  font-weight: 700;
+  font-feature-settings: "ss01";
+  letter-spacing: -0.3px;
+}
+
+.english-text {
+  font-family: 'Poppins', sans-serif;
+  line-height: 1.6;
+  font-weight: 400;
+}
+
+.english-text-bold {
+  font-family: 'Poppins', sans-serif;
+  font-weight: 600;
+}
+
+/* Additional utility classes for font weights */
+.font-vazir-light { font-weight: 300; }
+.font-vazir-regular { font-weight: 400; }
+.font-vazir-medium { font-weight: 500; }
+.font-vazir-bold { font-weight: 700; }
+
+.font-poppins-light { font-weight: 300; }
+.font-poppins-regular { font-weight: 400; }
+.font-poppins-medium { font-weight: 500; }
+.font-poppins-bold { font-weight: 600; }
+
+/* Add more specific Persian typography adjustments */
+.persian-title {
+  font-family: 'Vazirmatn', sans-serif;
+  font-weight: 800;
+  letter-spacing: -0.5px;
+  line-height: 1.6;
+}
+
+.persian-subtitle {
+  font-family: 'Vazirmatn', sans-serif;
+  font-weight: 600;
+  letter-spacing: -0.3px;
+  line-height: 1.7;
+}
+
+.persian-body {
+  font-family: 'Vazirmatn', sans-serif;
+  font-weight: 400;
+  letter-spacing: -0.2px;
+  line-height: 1.8;
+}
+
+/* Add these new styles */
+@layer utilities {
+  .bg-300\% {
+    background-size: 300% 300%;
+  }
+}
+
+.card-hover-effect {
+  transition: all 0.3s ease;
+}
+
+.card-hover-effect:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 20px rgba(124, 58, 237, 0.1);
+} 
