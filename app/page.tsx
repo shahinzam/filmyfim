@@ -11,8 +11,6 @@ interface Movie {
   imdb_id: string | null;
 }
 
-const API_URL = 'https://filmyfim-production.up.railway.app';
-
 export default function Home() {
   const [recommendedMovies, setRecommendedMovies] = useState<Movie[]>([]);
   const [featuredMovies, setFeaturedMovies] = useState<Movie[]>([]);
@@ -24,7 +22,7 @@ export default function Home() {
   const fetchFeaturedMovies = async () => {
     setIsFeaturedLoading(true);
     try {
-      const response = await fetch(`${API_URL}/featured-movies`);
+      const response = await fetch('https://filmyfim-production.up.railway.app/featured-movies');
       if (!response.ok) {
         throw new Error('Failed to fetch featured movies');
       }
@@ -54,8 +52,7 @@ export default function Home() {
     setError('');
 
     try {
-      const response = await fetch(`${API_URL}/recommend`, {
-        method: 'POST',
+      const response = await fetch('https://filmyfim-production.up.railway.app/recommend', {        method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
