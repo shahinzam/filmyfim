@@ -28,7 +28,10 @@ app = FastAPI()
 # Add CORS middleware
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:3000"],
+    allow_origins=[
+        "https://filmyfim.vercel.app",
+        "http://localhost:3000"  # برای توسعه محلی
+    ],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
