@@ -260,7 +260,3 @@ async def get_movie_recommendations(request: MovieRequest):
         print(f"Error occurred: {str(e)}")
         print(f"Raw AI response: {response.content if 'response' in locals() else 'No response'}")
         raise HTTPException(status_code=500, detail=str(e))
-if __name__ == "__main__":
-    import uvicorn
-    port = int(os.getenv("PORT", 8000))  # از متغیر محیطی PORT استفاده می‌کند
-    uvicorn.run(app, host="0.0.0.0", port=port)
