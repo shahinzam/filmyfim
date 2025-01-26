@@ -174,7 +174,7 @@ export default function Home() {
             <h2 className="text-xl sm:text-2xl font-semibold text-center mb-6 text-purple-300 persian-text-bold">
               فیلم‌های پیشنهادی
             </h2>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-6 animate-fade-in">
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 sm:gap-6 animate-fade-in">
               {recommendedMovies.map((movie, index) => (
                 <div 
                   key={index}

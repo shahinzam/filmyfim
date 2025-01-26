@@ -240,7 +240,7 @@ async def get_movie_recommendations(request: MovieRequest):
             if clean_line and not clean_line.lower().startswith(('similar', 'recommended')):
                 movie_titles.append(clean_line)
         
-        movie_titles = movie_titles[:5]
+        movie_titles = movie_titles[:6]
         
         movies_with_details = []
         for title in movie_titles:
@@ -248,7 +248,7 @@ async def get_movie_recommendations(request: MovieRequest):
             if details:
                 movies_with_details.append(details)
         
-        while len(movies_with_details) < 5:
+        while len(movies_with_details) < 6:
             original_movie = await get_movie_details(request.movie_title, model)
             if original_movie:
                 genre_id = random.choice(list(GENRES.values()))
