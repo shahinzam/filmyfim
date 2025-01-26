@@ -267,10 +267,12 @@ async def get_movie_recommendations(request: MovieRequest):
         raise HTTPException(status_code=500, detail=str(e))
 
 if __name__ == "__main__":
-    # Render sets PORT environment variable automatically
-    port = int(os.getenv("PORT", "10000"))
+    # Railway sets PORT environment variable automatically
+    port = int(os.getenv("PORT", "8080"))
     uvicorn.run(
         app,
         host="0.0.0.0",
-        port=port
+        port=port,
+        proxy_headers=True,
+        forwarded_allow_ips="*"
     )
