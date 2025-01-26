@@ -8,6 +8,7 @@ import httpx
 import re
 import random
 from prompts.movies import create_recommendation_prompt
+import uvicorn
 
 # Load environment variables
 load_dotenv()
@@ -264,3 +265,12 @@ async def get_movie_recommendations(request: MovieRequest):
         print(f"Error occurred: {str(e)}")
         print(f"Raw AI response: {response.content if 'response' in locals() else 'No response'}")
         raise HTTPException(status_code=500, detail=str(e))
+
+if __name__ == "__main__":
+    # Render sets PORT environment variable automatically
+    port = int(os.getenv("PORT", "10000"))
+    uvicorn.run(
+        app,
+        host="0.0.0.0",
+        port=port
+    )
