@@ -1,37 +1,40 @@
 def create_recommendation_prompt(movie_title: str) -> str:
-    return f"""As a film expert specializing in genre analysis, provide 5 movie recommendations similar to '{movie_title}'.
-Consider these key aspects:
+    return f"""As an expert film critic and recommendation specialist, suggest exactly 6 movies similar to '{movie_title}'.
 
-1. Primary and Secondary Genres:
-   - Match the main genre combinations (e.g., sci-fi thriller, romantic comedy)
-   - Similar mood and atmosphere
+    Consider these critical aspects in your analysis:
 
-2. Plot Elements and Themes:
-   - Comparable storylines and plot structures
-   - Similar central themes and messages
-   - Character dynamics and relationships
+    1. Emotional Resonance & Atmosphere:
+       - Similar emotional impact and mood
+       - Matching atmospheric elements
+       - Comparable pacing and tone
+       - Visual and stylistic similarities
 
-3. Target Audience and Appeal:
-   - Similar viewer demographics
-   - Comparable emotional impact
-   - Matching entertainment style
+    2. Narrative Elements:
+       - Related story structures and plot devices
+       - Similar character dynamics and development
+       - Matching thematic depth and complexity
+       - Comparable plot twists and revelations
 
-4. Production Era and Style:
-   - Similar production values
-   - Comparable visual and narrative techniques
-   - Time period relevance
+    3. Viewer Experience:
+       - Similar emotional journeys for the audience
+       - Matching intellectual engagement level
+       - Comparable memorable moments
+       - Related cinematic techniques
 
-5. Cultural and Critical Reception:
-   - Similar audience reactions
-   - Comparable critical recognition
-   - Cultural significance
+    4. Audience Behavior Patterns:
+       - Movies frequently enjoyed by fans of '{movie_title}'
+       - Films with high viewer overlap
+       - Similar cult following or audience reception
+       - Matching viewer satisfaction patterns
 
-Provide exactly 5 highly relevant movie titles that closely match these aspects of '{movie_title}'.
-Return ONLY the movie titles, one per line, with no additional text or numbering.
+    5. Technical and Artistic Merit:
+       - Similar directorial style
+       - Comparable cinematography and visual effects
+       - Matching production quality
+       - Related musical scoring and sound design
 
-Example format:
-The Matrix
-Inception
-Blade Runner
-Dark City
-Ex Machina""" 
+    Provide exactly 6 movie titles that best match these criteria. Focus on creating a cohesive viewing experience similar to '{movie_title}'.
+    
+    Return ONLY the movie titles, one per line, without any additional text, numbers, or explanations.
+    Ensure each recommendation truly captures the essence and appeal of the original film.
+    Do not include the original movie in the recommendations.""" 
