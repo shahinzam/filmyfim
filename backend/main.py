@@ -21,7 +21,7 @@ if not GROQ_API_KEY or not TMDB_API_KEY:
     raise ValueError("Missing required API keys")
 
 # Initialize the model
-model = ChatGroq(model="gemma2-9b-it", api_key=GROQ_API_KEY)  # Changed to mixtral model
+model = ChatGroq(model="mixtral-8x7b-32768", api_key=GROQ_API_KEY)  # Using Mixtral model
 
 # Define FastAPI app
 app = FastAPI()
@@ -32,10 +32,10 @@ app.add_middleware(
     allow_origins=[
         "http://localhost:3000",
         "https://filmyfim.vercel.app",
-        "*"  # موقتاً برای تست
+        "https://filmyfim-git-main-shahinzam.vercel.app"
     ],
     allow_credentials=True,
-    allow_methods=["*"],
+    allow_methods=["GET", "POST"],
     allow_headers=["*"],
 )
 
@@ -265,6 +265,10 @@ async def get_movie_recommendations(request: MovieRequest):
         print(f"Error occurred: {str(e)}")
         print(f"Raw AI response: {response.content if 'response' in locals() else 'No response'}")
         raise HTTPException(status_code=500, detail=str(e))
+
+@app.get("/")
+async def root():
+    return {"status": "ok", "message": "Server is running"}
 
 if __name__ == "__main__":
     # Railway sets PORT environment variable automatically
