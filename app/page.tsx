@@ -1,7 +1,6 @@
 'use client';
 import { useState, useEffect } from 'react';
 import { translateGenre } from './utils/translations';
-import Image from 'next/image';
 
 interface Movie {
   name: string;
@@ -125,12 +124,10 @@ export default function Home() {
                     hover:-translate-y-1 cursor-pointer max-w-sm mx-auto w-full`}
                 >
                   <div className="aspect-[2/3] relative overflow-hidden">
-                    <Image
+                    <img
                       src={movie.image}
                       alt={movie.name}
-                      fill
-                      className="object-cover transition-all duration-500 group-hover:scale-105"
-                      sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                      className="w-full h-full object-cover transition-all duration-500 group-hover:scale-105"
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"/>
                     <div className="absolute top-2 right-2 transform transition-transform duration-300 group-hover:scale-110">
@@ -187,12 +184,10 @@ export default function Home() {
                     hover:shadow-purple-500/10 hover:-translate-y-1 max-w-sm mx-auto w-full"
                 >
                   <div className="aspect-[2/3] relative overflow-hidden">
-                    <Image
+                    <img
                       src={movie.image || `https://via.placeholder.com/500x750?text=${encodeURIComponent(movie.name)}`}
                       alt={movie.name}
-                      fill
-                      className="object-cover transition-transform duration-300 hover:scale-110"
-                      sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                      className="w-full h-full object-cover transition-transform duration-300 hover:scale-110"
                     />
                     <div className="absolute top-2 right-2">
                       <span className="bg-black/50 backdrop-blur-sm text-purple-300 px-3 py-1 rounded-full text-sm font-semibold">
