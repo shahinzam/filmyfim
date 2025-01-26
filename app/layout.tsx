@@ -12,10 +12,10 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
-export const metadata = {
+export const metadata: Metadata = {
   title: 'FilmyFim',
   description: 'Find similar movies based on your favorites',
-}
+};
 
 export default function RootLayout({
   children,
