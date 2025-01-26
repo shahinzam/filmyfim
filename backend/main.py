@@ -8,7 +8,6 @@ import httpx
 import re
 import random
 from prompts.movies import create_recommendation_prompt
-import uvicorn
 import asyncio
 from typing import List, Optional
 
@@ -37,13 +36,25 @@ app.add_middleware(
         "https://www.filmyfim.vercel.app",
         "https://filmyfim-git-main-shahinzam.vercel.app",
         "https://filmyfim-shahinzam.vercel.app",
+        "https://your-production-domain.com",
+        "file://"
     ],
     allow_credentials=True,
-    allow_methods=["GET", "POST", "OPTIONS", "HEAD"],
+    allow_methods=["*"],
     allow_headers=["*"],
     expose_headers=["*"],
     max_age=3600,
 )
+
+# اضافه کردن middleware برای اطمینان از CORS
+@app.middleware("http")
+async def add_cors_headers(request, call_next):
+    response = await call_next(request)
+    response.headers["Access-Control-Allow-Origin"] = "*"
+    response.headers["Access-Control-Allow-Credentials"] = "true"
+    response.headers["Access-Control-Allow-Methods"] = "*"
+    response.headers["Access-Control-Allow-Headers"] = "*"
+    return response
 
 # Expanded genre categories with more variety
 GENRES = {
@@ -267,14 +278,3 @@ async def get_movie_recommendations(request: MovieRequest):
 @app.get("/")
 async def root():
     return {"status": "ok", "message": "Server is running"}
-
-if __name__ == "__main__":
-    # Railway sets PORT environment variable automatically
-    port = int(os.getenv("PORT", "8080"))
-    uvicorn.run(
-        app,
-        host="0.0.0.0",
-        port=port,
-        proxy_headers=True,
-        forwarded_allow_ips="*"
-    )

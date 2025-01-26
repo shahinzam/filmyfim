@@ -26,10 +26,9 @@ export default function Home() {
       const response = await fetch('https://filmyfim-production.up.railway.app/featured-movies', {
         method: 'GET',
         headers: {
+          'Accept': 'application/json',
           'Content-Type': 'application/json',
         },
-        mode: 'cors',
-        cache: 'no-cache'
       });
 
       if (!response.ok) {
@@ -65,10 +64,9 @@ export default function Home() {
       const response = await fetch('https://filmyfim-production.up.railway.app/recommend', {
         method: 'POST',
         headers: {
+          'Accept': 'application/json',
           'Content-Type': 'application/json',
         },
-        mode: 'cors',
-        cache: 'no-cache',
         body: JSON.stringify({ movie_title: movieName }),
       });
 
