@@ -23,7 +23,15 @@ export default function Home() {
     setIsFeaturedLoading(true);
     setFetchError('');
     try {
-      const response = await fetch('https://filmyfim-production.up.railway.app/featured-movies');
+      const response = await fetch('https://filmyfim-production.up.railway.app/featured-movies', {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        mode: 'cors',
+        cache: 'no-cache'
+      });
+
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);
       }
@@ -59,6 +67,8 @@ export default function Home() {
         headers: {
           'Content-Type': 'application/json',
         },
+        mode: 'cors',
+        cache: 'no-cache',
         body: JSON.stringify({ movie_title: movieName }),
       });
 
