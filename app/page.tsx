@@ -51,10 +51,11 @@ export default function Home() {
     if (isLoading) return;
     setSelectedMovie(movieName);
     setIsLoading(true);
-    setError('');
+    setFetchError('');
 
     try {
-      const response = await fetch('https://filmyfim-production.up.railway.app/recommend', {        method: 'POST',
+      const response = await fetch('https://filmyfim-production.up.railway.app/recommend', {
+        method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
@@ -68,7 +69,7 @@ export default function Home() {
       const data = await response.json();
       setRecommendedMovies(data.recommendations);
     } catch (err) {
-      setError('Failed to get movie recommendations. Please try again.');
+      setFetchError('خطا در دریافت پیشنهادات. لطفاً دوباره تلاش کنید.');
       console.error(err);
     } finally {
       setIsLoading(false);
