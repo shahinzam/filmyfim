@@ -34,6 +34,7 @@ app.add_middleware(
     allow_origins=[
         "http://localhost:3000",
         "https://filmyfim.vercel.app",
+        "https://www.filmyfim.vercel.app",
         "https://filmyfim-git-main-shahinzam.vercel.app",
         "https://filmyfim-shahinzam.vercel.app",
     ],
