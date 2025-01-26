@@ -9,6 +9,8 @@ import re
 import random
 from prompts.movies import create_recommendation_prompt
 import uvicorn
+import asyncio
+from typing import List, Optional
 
 # Load environment variables
 load_dotenv()
@@ -29,11 +31,7 @@ app = FastAPI()
 # Add CORS middleware
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=[
-        "http://localhost:3000",
-        "https://filmyfim.vercel.app",
-        "https://filmyfim-git-main-shahinzam.vercel.app"
-    ],
+    allow_origins=["*"],  # موقتاً برای تست
     allow_credentials=True,
     allow_methods=["GET", "POST"],
     allow_headers=["*"],
@@ -92,7 +90,7 @@ async def translate_to_persian(text: str, model: ChatGroq) -> str:
 
 async def get_movie_details(title: str, model: ChatGroq) -> dict:
     """Get movie details from TMDB API with Persian translation"""
-    async with httpx.AsyncClient() as client:
+    async with httpx.AsyncClient(timeout=30.0) as client:
         cleaned_title = re.sub(r'[^\w\s]', '', title).strip()
         
         search_url = f"https://api.themoviedb.org/3/search/movie"
@@ -150,7 +148,7 @@ async def get_movie_details(title: str, model: ChatGroq) -> dict:
 
 async def get_top_movie_by_genre(genre_id: int, exclude_movies: list = None, model: ChatGroq = None) -> dict:
     """Get a top-rated movie from a specific genre, excluding certain movies"""
-    async with httpx.AsyncClient() as client:
+    async with httpx.AsyncClient(timeout=30.0) as client:
         url = "https://api.themoviedb.org/3/discover/movie"
         params = {
             "api_key": TMDB_API_KEY,
@@ -193,28 +191,20 @@ async def get_featured_movies():
         movies = []
         used_movies = set()
         
-        for genre_name in genre_set:
-            genre_id = GENRES[genre_name]
-            attempts = 0
-            while attempts < 3:
-                movie = await get_top_movie_by_genre(genre_id, list(used_movies), model)
-                if movie and movie["name"] not in used_movies:
-                    movies.append(movie)
-                    used_movies.add(movie["name"])
-                    break
-                attempts += 1
-        
-        while len(movies) < 3:
-            remaining_genres = [g for g in GENRES.keys() if g not in genre_set]
-            if remaining_genres:
-                genre_name = random.choice(remaining_genres)
+        async with httpx.AsyncClient(timeout=30.0) as client:
+            tasks = []
+            for genre_name in genre_set:
                 genre_id = GENRES[genre_name]
-                movie = await get_top_movie_by_genre(genre_id, list(used_movies), model)
-                if movie and movie["name"] not in used_movies:
-                    movies.append(movie)
-                    used_movies.add(movie["name"])
+                tasks.append(get_top_movie_by_genre(genre_id, list(used_movies), model))
+            
+            results = await asyncio.gather(*tasks, return_exceptions=True)
+            
+            for result in results:
+                if isinstance(result, dict) and result["name"] not in used_movies:
+                    movies.append(result)
+                    used_movies.add(result["name"])
         
-        return {"movies": movies}
+        return {"movies": movies[:3]}
         
     except Exception as e:
         print(f"Error occurred: {str(e)}")
